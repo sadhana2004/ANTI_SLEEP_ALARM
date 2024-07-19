@@ -1,0 +1,54 @@
+# C++ CODE INSTALLED IN ARDUINO
+
+#include <LiquidCrystal.h>  
+const int rs = 8, en = 9, d4 = 10, d5 = 11, d6 = 12, d7 = 13;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+#define buz A1
+#define es A0
+#define mt 2
+int tm=0;
+void setup() {
+  Serial.begin(9600); 
+  pinMode(buz,OUTPUT);
+  lcd.begin(16,2);
+  lcd.clear();
+  lcd.print("WELCOME");
+   pinMode(mt,OUTPUT);  
+   pinMode(3,OUTPUT); 
+  digitalWrite(buz,0);
+  delay(1000);
+  digitalWrite(mt,1);
+  digitalWrite(3,0);
+}
+void loop() {
+int ev=1-digitalRead(es);
+if(ev==0)
+{
+  tm=tm+1;
+}
+else
+tm=0;
+lcd.clear() ;
+lcd.print("Count:"+String(tm));
+if(tm>5)
+{
+  digitalWrite(buz,1);
+  delay(200);
+  digitalWrite(buz,0);
+}
+if(tm>8)
+{
+  digitalWrite(buz,1);
+  delay(200);
+  digitalWrite(buz,0);
+}
+if(tm>10)
+{
+  digitalWrite(buz,1);
+   digitalWrite(mt,0);
+ lcd.setCursor(0,1) ;
+lcd.print("STOPPED");
+  while(1); 
+}
+delay(300);
+ }
